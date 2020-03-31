@@ -1,0 +1,40 @@
+{
+  "name": "pulseserver",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "express-graphql": "^0.9.0",
+    "express-validator": "^6.4.0",
+    "graphql": "^14.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "~1.9.1",
+    "node-postgres": "^0.1.4",
+    "node-sass-middleware": "0.11.0",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2",
+    "socket.io": "^2.3.0"
+  },
+  "description": "This is server for pulse mobile application",
+  "main": "app.js",
+  "proxy": "http://localhost:3000/",
+  "devDependencies": {},
+  "keywords": [
+    "node",
+    "express",
+    "mobile",
+    "server",
+    "android",
+    "vue",
+    "quasar"
+  ],
+  "author": "Maxim Shkurin <mhuanteraxe@gmail.com>",
+  "license": "ISC"
+}
