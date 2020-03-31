@@ -6,6 +6,6 @@ VOLUME /home/server
 WORKDIR /home/server
 COPY ./ /home/server/
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD http-server

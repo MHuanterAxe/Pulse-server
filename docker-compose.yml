@@ -17,7 +17,7 @@ services:
     image: mhuanteraxe/pulse
     container_name: application
     ports:
-    - 8080:8080
+    - 3000:3000
     environment:
       POSTGRES_HOST: db
     restart: always
