@@ -13,4 +13,23 @@ services:
       POSTGRES_USER: postgres
       PGDATA: /var/lib/postgresql/pgdata
     restart: always
+  app:
+    image: mhuanteraxe/pulse
+    container_name: application
+    ports:
+    - 3000:3000
+    environment:
+      POSTGRES_HOST: db
+    restart: always
+    links:
+      - db
+  nginx:
+    image: nginx:1.17.9-alpine
+    container_name: nginx
+    volumes:
+    - ./default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - app
+    ports:
+    - 8989:8989
 
