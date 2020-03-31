@@ -1,0 +1,18 @@
+{
+  "type": "postgres",
+  "host": "db",
+  "port": 5432,
+  "username": "postgres",
+  "password": "45685255",
+  "database": "PulseDB",
+  "synchronize": true,
+  "loading": false,
+  "entities": "[dist/src/entities/**/*]",
+  "migrations": "[dist/src/migration/**/*]",
+  "subscribers": "[dist/src/subscriber/**/*]",
+  "cli": {
+    "entitiesDir": "dist/src/entity",
+    "migrationsDir": "dist/src/migration",
+    "subscribersDir": "dist/src/subscriber"
+  }
+}
