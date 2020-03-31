@@ -24,13 +24,13 @@ router.post('/register',
 
       const { first_name, last_name, email, password } = req.body;
       await pool.connect().catch(error => console.log(error));
-      const candidate = await pool.query('SELECT u.email FROM "User" u WHERE u.email = $1', [email]);
+      const candidate = await pool.query('SELECT u.email FROM "Users" u WHERE u.email = $1', [email]);
       if (candidate.rows.length) {
         res.status(400).json({ message: 'User with this email already exist!' })
       }
       const hashedPassword = await bcrypt.hash(password, 12);
       await pool.query(
-        'INSERT INTO "User" (first_name, last_name, email, password) ' +
+        'INSERT INTO "Users" (first_name, last_name, email, password) ' +
         'VALUES ($1, $2, $3, $4)',
         [ first_name, last_name, email, hashedPassword ]
       ).catch(err => {
@@ -58,7 +58,7 @@ router.post('/login',
       const { email, password } = req.body
       console.log(email, password)
       const user = pool.query(
-        'SELECT * FROM "User" u WHERE u.email = $1',
+        'SELECT * FROM "Users" u WHERE u.email = $1',
         [email],
         (err, result) => {
           if (!result.rows) {
