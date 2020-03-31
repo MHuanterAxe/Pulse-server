@@ -1,11 +1,8 @@
 # stage 1 building the node
-FROM alpine
-RUN apk add npm && npm i -g http-server
-
-VOLUME /home/server
-WORKDIR /home/server
-COPY ./ /home/server/
-
+FROM node
+WORKDIR /app
+COPY package.json /app
+RUN npm install
+COPY . /app
 EXPOSE 3000
-
-CMD http-server
+CMD npm run start
