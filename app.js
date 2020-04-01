@@ -23,6 +23,7 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/auth', require('./src/routes/auth'))
+app.use('/api/notes', require('./src/routes/notes'))
 
 server.listen(config.port, function () {
   console.log('Server listening at port %d', config.port);
