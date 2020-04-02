@@ -4,13 +4,12 @@ const jwt = require('jsonwebtoken');
 
 exports.userNotes = async (req, res) => {
   try {
-    const { token } = req.params
-    const { userId } = jwt.verify(token, config.jwt)
+    const { user_id } = req.params
     await pool.query(
       'SELECT n.user_id, n.note_id, n.note_label, n.text, n.created_at, n.updated_at, n.folder_id, f.folder_label ' +
       'FROM "Notes" n ' +
       'LEFT JOIN "Folders" f ON n.folder_id = f.folder_id AND n.user_id = $1',
-      [userId],
+      [user_id],
       (err, result) => {
         if (err) {
           return res.status(400).json({ message: err.message })

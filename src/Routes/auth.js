@@ -16,5 +16,4 @@ router.post('/login',
     check('password', 'Incorrect password').exists()
   ],
   AuthController.login);
-
 module.exports = router

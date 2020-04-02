@@ -1,8 +1,9 @@
 const { validationResult } = require( "express-validator");
-const config = require('../Config/default');
-const bcrypt = require('bcrypt');
-const { pool } = require('../DataBase');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { secret } = require('../Config/default');
+const AuthHelper = require('../Helpers/AuthHelper')
+const { pool } = require('../DataBase');
 
 exports.register = async function (req, res) {
   try {
@@ -43,8 +44,7 @@ exports.login = async function (req, res) {
       })
     }
     const {email, password} = req.body
-    console.log(email, password)
-    const user = pool.query(
+    await pool.query(
       'SELECT * FROM "Users" u WHERE u.email = $1',
       [email],
       (err, result) => {
@@ -52,15 +52,12 @@ exports.login = async function (req, res) {
           return res.status(400).json('User did not found')
         }
         const isMatch = bcrypt.compare(password, result.rows[0].password)
-        if (!isMatch) {
+        if (isMatch) {
+          const token = jwt.sign({ id: result.rows[0].user_id }, secret)
+          return res.json({ message: 'Successfully logging in', token })
+        } else {
           return res.status(400).json('Incorrect password')
         }
-        const token = jwt.sign(
-          {userId: result.rows[0].user_id},
-          config.jwt,
-          {expiresIn: '1h'}
-        );
-        res.json({token, id: result.rows[0].user_id})
       })
 
   } catch (e) {
