@@ -1,5 +1,5 @@
-const config = require('../config/default');
-const { pool } = require('../db');
+const config = require('../Config/default');
+const { pool } = require('../DataBase');
 const jwt = require('jsonwebtoken');
 
 exports.userNotes = async (req, res) => {

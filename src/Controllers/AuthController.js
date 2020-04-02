@@ -1,7 +1,7 @@
 const { validationResult } = require( "express-validator");
-const config = require('../config/default');
+const config = require('../Config/default');
 const bcrypt = require('bcrypt');
-const { pool } = require('../db');
+const { pool } = require('../DataBase');
 const jwt = require('jsonwebtoken');
 
 exports.register = async function (req, res) {

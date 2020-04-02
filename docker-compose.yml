@@ -19,7 +19,7 @@ services:
     ports:
     - 3000:3000
     environment:
-      POSTGRES_HOST: db
+      POSTGRES_HOST: DataBase
     restart: always
     links:
       - db

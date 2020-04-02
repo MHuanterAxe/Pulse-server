@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const NotesController = require('../controllers/NotesController')
+const NotesController = require('../Controllers/NotesController')
 
 router.get('/:token', NotesController.userNotes);
 router.post('/create/:token', NotesController.addNote);
