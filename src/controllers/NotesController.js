@@ -51,9 +51,11 @@ exports.addNote = async (req, res) => {
 };
 exports.deleteNote = async (req, res) => {
   try {
-    const { token } = req.params
-    const { note_id } = req.body
+    const { note_id, token } = req.params
     const { userId } = jwt.verify(token, config.jwt)
+    if (note_id === undefined) {
+      return res.status(400).json({ message: 'incorrect data'})
+    }
     await pool.query(
       'DELETE FROM "Notes" WHERE note_id = $1',
       [note_id],
