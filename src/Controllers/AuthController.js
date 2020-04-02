@@ -29,6 +29,18 @@ exports.register = async function (req, res) {
     ).catch(err => {
       res.status(400).json('Incorrect data')
     })
+    await pool.query(
+      'SELECT u.user_id FROM "Users" u WHERE u.email = $1', [email], async (err, result) => {
+        if (err) {
+          return res.status(400).json({ error: err })
+        }
+        await pool.query(
+          'INSERT INTO "Folders" (folder_label, user_id) ' +
+          'VALUES ($1, $2)',
+          [ "Все заметки", result.rows[0].user_id]
+        )
+      }
+    )
   } catch (e) {
     res.status(500).json({ message: 'Что-то пошло не так' })
   }

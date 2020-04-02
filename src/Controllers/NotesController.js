@@ -32,14 +32,18 @@ exports.addNote = async (req, res) => {
       return res.status(400).json({ message: 'incorrect data' })
     }
     await pool.query(
-      'INSERT INTO "Notes" ( user_id, note_label, text, created_at, updated_at, folder_id ) ' +
-      'VALUES ( $1, $2, $3, $4, $5, $6 )',
-      [id, label, text, date, date, folder_id],
-      (err, result) => {
-        if (err) {
-          return res.status(400).json({ message: err })
-        }
-        return res.status(201).json({ message: 'Note have been created' })
+      'SELECT f.folder_id FROM "Folders" f WHERE f.user_id = $1', [id], async (err, result) => {
+        await pool.query(
+          'INSERT INTO "Notes" ( user_id, note_label, text, created_at, updated_at, folder_id ) ' +
+          'VALUES ( $1, $2, $3, $4, $5, $6 )',
+          [id, label, text, date, date, result.rows[0].folder_id],
+          (err, result) => {
+            if (err) {
+              return res.status(400).json({ message: err })
+            }
+            return res.status(201).json({ message: 'Note have been created' })
+          }
+        )
       }
     )
 
