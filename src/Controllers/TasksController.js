@@ -6,7 +6,7 @@ exports.userTasks = async (req, res) => {
   try {
     const { id } = req.body
     await pool.query(
-      'SELECT t.task_id, t.task_label, t.importance, t.created_at, tl.task_list_id, tl.task_list_label ' +
+      'SELECT t.task_id, t.task_label, t.importance, t.created_at, t.date, t.completed, tl.task_list_id, tl.task_list_label ' +
       'FROM "Users" u ' +
       'JOIN "Tasks" t ON u.user_id = t.user_id ' +
       'JOIN "TaskLists" tl ON u.user_id = t.user_id ' +
