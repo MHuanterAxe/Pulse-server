@@ -49,6 +49,25 @@ exports.addTask = async (req, res) => {
     res.status(500).json({ message: e.message })
   }
 };
+exports.updateTask = async (req, res) => {
+  try {
+    const updateDate = new Date();
+    const { id } = req.body;
+    const { task_id } = req.params
+    console.log(id, task_id)
+    await pool.query(
+      'UPDATE "Tasks" ' +
+      'SET completed=NOT completed ' +
+      'WHERE user_id = $1 AND task_id = $2;', [id, task_id], async (err) => {
+        if (err) {
+          return res.status(400).json({message: err.message})
+        }
+        return res.status(200).json({message: 'OK!'})
+      })
+  } catch (e) {
+    res.status(500).json({ message: e.message })
+  }
+};
 exports.deleteTask = async (req, res) => {
   try {
     const { task_id } = req.params
