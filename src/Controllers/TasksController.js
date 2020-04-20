@@ -10,7 +10,32 @@ exports.userTasks = async (req, res) => {
       'FROM "Users" u ' +
       'JOIN "Tasks" t ON u.user_id = t.user_id ' +
       'JOIN "TaskLists" tl ON u.user_id = tl.user_id ' +
-      'WHERE u.user_id = $1',
+      'WHERE u.user_id = $1 ' +
+      'ORDER BY t.completed, t.date',
+      [id],
+      (err, result) => {
+        if (err) {
+          return res.status(400).json({ message: err.message })
+        }
+        return res.json({ data: result.rows })
+      }
+    )
+
+  } catch (e) {
+    res.status(500).json({ message: e.message })
+  }
+};
+exports.userTasksDone = async (req, res) => {
+  try {
+    const { id } = req.body
+    await pool.query(
+      'SELECT t.task_id, t.task_label, t.importance, t.updated_at, t.date, t.completed, tl.task_list_id, tl.task_list_label ' +
+      'FROM "Users" u ' +
+      'JOIN "Tasks" t ON u.user_id = t.user_id ' +
+      'JOIN "TaskLists" tl ON u.user_id = tl.user_id ' +
+      'WHERE u.user_id = $1 AND ' +
+      't.completed = true ' +
+      'ORDER BY t.updated_at DESC',
       [id],
       (err, result) => {
         if (err) {
