@@ -9,7 +9,7 @@ exports.userTasks = async (req, res) => {
       'SELECT t.task_id, t.task_label, t.importance, t.created_at, t.date, t.completed, tl.task_list_id, tl.task_list_label ' +
       'FROM "Users" u ' +
       'JOIN "Tasks" t ON u.user_id = t.user_id ' +
-      'JOIN "TaskLists" tl ON u.user_id = t.user_id ' +
+      'JOIN "TaskLists" tl ON u.user_id = tl.user_id ' +
       'WHERE u.user_id = $1',
       [id],
       (err, result) => {
@@ -54,7 +54,6 @@ exports.updateTask = async (req, res) => {
     const updateDate = new Date();
     const { id } = req.body;
     const { task_id } = req.params
-    console.log(id, task_id)
     await pool.query(
       'UPDATE "Tasks" ' +
       'SET completed=NOT completed ' +
