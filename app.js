@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', require('./src/Routes/auth'));
 app.use('/api/notes', require('./src/Routes/notes'));
 app.use('/api/tasks', require('./src/Routes/tasks'));
+app.use('/api/user', require('./src/Routes/user'));
 
 server.listen(config.port, function () {
   console.log('Server listening at port %d', config.port);
